@@ -1,45 +1,49 @@
 var gameState= {
+
     _createPlayer: function(x, y) {
         var player = game.add.sprite(x, y, 'player1');
         player.anchor.setTo(0.5, 0.5);
 
-        game.physics.arcade.enable(player);
+        game.physics.enable(player, Phaser.Physics.ARCADE);
 
-        player.body.maxAngular = 500;
-        player.body.angularDrag = 50;
+        player.body.drag.set(100);
+        player.body.maxVelocity.set(200);
 
         return player;
     },
 
     _handleMovement: function(player, forward, left, right) {
-        player.body.angularAcceleration = 0;
+        if (forward.isDown) {
+            game.physics.arcade.accelerationFromRotation(player.rotation - (Math.PI / 2), 200, player.body.acceleration);
+        } else {
+            player.body.acceleration.set(0);
+        }
 
         if (left.isDown) {
-            player.body.angularAcceleration -= 200;
+            player.body.angularVelocity = -300;
+        } else if (right.isDown) {
+            player.body.angularVelocity = 300;
+        } else {
+            player.body.angularVelocity = 0;
         }
-        if (right.isDown) {
-            player.body.angularAcceleration += 200;
+
+        this._screenWrap(player);
+    },
+
+    _screenWrap: function(sprite) {
+
+        if (sprite.x < 0) {
+            sprite.x = game.width;
         }
-        if (forward.isDown) {
-            var preX = player.body.velocity.x;
-            var preY = player.body.velocity.y;
-            game.physics.arcade.velocityFromAngle(player.angle - 90, 5, player.body.velocity);
-            player.body.velocity.x += preX;
-            player.body.velocity.y += preY;
+        else if (sprite.x > game.width) {
+            sprite.x = 0;
+        }
 
-            var maxPositiveVelocity = 250;
-            var maxNegativeVelocity = -250;
-            if (player.body.velocity.x > maxPositiveVelocity) {
-                player.body.velocity.x = maxPositiveVelocity;
-            } else if (player.body.velocity.x < maxNegativeVelocity) {
-                player.body.velocity.x = maxNegativeVelocity;
-            }
-
-            if (player.body.velocity.y > maxPositiveVelocity) {
-                player.body.velocity.y = maxPositiveVelocity;
-            } else if (player.body.velocity.y < maxNegativeVelocity) {
-                player.body.velocity.y = maxNegativeVelocity;
-            }
+        if (sprite.y < 0) {
+            sprite.y = game.height;
+        }
+        else if (sprite.y > game.height) {
+            sprite.y = 0;
         }
     },
 
