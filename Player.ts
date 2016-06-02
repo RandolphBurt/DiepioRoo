@@ -27,7 +27,7 @@ class Player {
     public handleMovement = () => {
         if (this._forward.isDown) {
             // TODO: We take away a radian because our graphics face up instead of to the right...  (Ideally change the graphics)
-            this._game.physics.arcade.accelerationFromRotation(this._player.rotation - (Math.PI / 2), 200, this._player.body.acceleration);
+            this._game.physics.arcade.accelerationFromRotation(this._player.rotation, 200, this._player.body.acceleration);
         } else {
             this._player.body.acceleration.set(0);
         }
