@@ -36,7 +36,7 @@ class GameState {
             var bullet = this.bullets.getFirstExists(false);
 
             if (bullet) {
-                bullet.reset(player.sprite.body.x + 16, player.sprite.body.y + 16);
+                bullet.reset(player.sprite.body.x + 40, player.sprite.body.y + 22);
                 bullet.lifespan = 2000;
                 bullet.rotation = player.sprite.rotation;
                 this.game.physics.arcade.velocityFromRotation(player.sprite.rotation, 400, bullet.body.velocity);
