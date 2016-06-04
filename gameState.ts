@@ -49,7 +49,7 @@ class GameState {
             this.game.input.keyboard.addKey(Phaser.Keyboard.W),
             this.game.input.keyboard.addKey(Phaser.Keyboard.A),
             this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-            this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR));
+            this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT));
 
         this.player2 = new Player(
             this.game,
@@ -60,15 +60,25 @@ class GameState {
             this.game.input.keyboard.addKey(Phaser.Keyboard.UP),
             this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
             this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
-            this.game.input.keyboard.addKey(Phaser.Keyboard.END));
+            this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1));
+    };
 
-        this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.game.input.keyboard.addKey(Phaser.Keyboard.END);
+    private player1Hit = (player1Sprite: Sprite, bullet: Sprite) => {
+        bullet.kill();
+        this.player1.health--;
+    };
+
+    private player2Hit = (player2Sprite: Sprite, bullet: Sprite) => {
+        bullet.kill();
+        this.player2.health--;
     };
 
     public update = () => {
-        this.player1.handleMovement();
-        this.player2.handleMovement();
+        this.game.physics.arcade.overlap(this.player1.sprite, this.player2.bulletsGroup, this.player1Hit, null, this);
+        this.game.physics.arcade.overlap(this.player2.sprite, this.player1.bulletsGroup, this.player2Hit, null, this);
+
+        this.player1.update();
+        this.player2.update();
 
         this.screenWrap(this.player1.sprite);
         this.screenWrap(this.player2.sprite);
