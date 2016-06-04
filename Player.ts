@@ -26,9 +26,11 @@ class Player {
         this.bullets = this._game.add.group();
         this.bullets.enableBody = true;
         this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        this.bullets.createMultiple(40, bulletImage);
+        this.bullets.createMultiple(10, bulletImage);
         this.bullets.setAll('anchor.x', 0.5);
         this.bullets.setAll('anchor.y', 0.5);
+        this.bullets.setAll('outOfBoundsKill', true);
+        this.bullets.setAll('checkWorldBounds', true);
     };
 
     public get sprite() {
@@ -45,7 +47,7 @@ class Player {
 
             if (bullet) {
                 bullet.reset(this._player.body.x + 40, this._player.body.y + 22);
-                bullet.lifespan = 2000;
+                //bullet.lifespan = 2000;
                 bullet.rotation = this._player.rotation;
                 this._game.physics.arcade.velocityFromRotation(this._player.rotation, 400, bullet.body.velocity);
                 this.bulletTime = this._game.time.now + 150;

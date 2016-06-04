@@ -72,8 +72,5 @@ class GameState {
 
         this.screenWrap(this.player1.sprite);
         this.screenWrap(this.player2.sprite);
-
-        this.player1.bulletsGroup.forEachExists(this.screenWrap, this);
-        this.player2.bulletsGroup.forEachExists(this.screenWrap, this);
     };
 }
