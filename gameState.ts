@@ -47,9 +47,10 @@ class GameState {
             'player1',
             'bullet1',
             this.game.input.keyboard.addKey(Phaser.Keyboard.W),
+            this.game.input.keyboard.addKey(Phaser.Keyboard.S),
             this.game.input.keyboard.addKey(Phaser.Keyboard.A),
             this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-            this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT));
+            this.game.input.keyboard.addKey(Phaser.Keyboard.F));
 
         this.player2 = new Player(
             this.game,
@@ -58,19 +59,20 @@ class GameState {
             'player2',
             'bullet2',
             this.game.input.keyboard.addKey(Phaser.Keyboard.UP),
+            this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
             this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
             this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
-            this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1));
+            this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9));
     };
 
     private player1Hit = (player1Sprite: Sprite, bullet: Sprite) => {
         bullet.kill();
-        this.player1.health--;
+        this.player1.health -= 10;
     };
 
     private player2Hit = (player2Sprite: Sprite, bullet: Sprite) => {
         bullet.kill();
-        this.player2.health--;
+        this.player2.health -= 10;
     };
 
     public update = () => {

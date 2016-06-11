@@ -2,6 +2,7 @@ class Player {
     private _player: Phaser.Sprite;
     private _health: number;
     private _forward:Phaser.Key;
+    private _back:Phaser.Key;
     private _left:Phaser.Key;
     private _right:Phaser.Key;
     private _fire:Phaser.Key;
@@ -10,9 +11,10 @@ class Player {
     private _bullets :Phaser.Group;
     private _bulletTime :number = 0;
 
-    constructor(game: Game, x: number, y: number, playerImage: string, bulletImage: string, forward: Key, left: Key, right: Key, fire: Key) {
+    constructor(game: Game, x: number, y: number, playerImage: string, bulletImage: string, forward: Key, back: Key, left: Key, right: Key, fire: Key) {
         this._game = game;
         this._forward = forward;
+        this._back = back;
         this._left = left;
         this._right = right;
         this._fire = fire;
@@ -70,6 +72,8 @@ class Player {
     public update = () => {
         if (this._forward.isDown) {
             this._game.physics.arcade.accelerationFromRotation(this._player.rotation, 200, this._player.body.acceleration);
+        } else if (this._back.isDown) {
+            this._game.physics.arcade.accelerationFromRotation(this._player.rotation, -200, this._player.body.acceleration);
         } else {
             this._player.body.acceleration.set(0);
         }
