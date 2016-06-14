@@ -46,4 +46,9 @@ class HealthBar {
 
         this.percentageBar.scale = new Point(scaleHealth, 1);
     };
+    
+    public kill = () => {
+        this.percentageBar.kill();
+        this.outlineBar.kill();
+    }
 }
